@@ -55,13 +55,21 @@
     console.log(firstGolden)
 
 // 🚧 Break Out Activity 1:
-const strings = ['hello', 'hi', 'world', 'potato']
+const strings = ['hello', 'hi', 'world', 'potato', 'excellent']
 /* 
     create a function that accepts an array of strings
     and prints out each element in the array if
     the string has more than 5 characters
 */
+function printStrsGreaterThanFiveChars(arryOfStrs) {
+    arryOfStrs.forEach((str) => {
+        if (str.length > 5) {
+            console.log(str)
+        }
+    })
+}
 
+printStrsGreaterThanFiveChars(strings)
 
 
 // 🚧 Break Out Activity 2:
