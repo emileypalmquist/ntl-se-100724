@@ -1,3 +1,5 @@
+console.log('hello from index.js', document.getElementById("header"))
+
 // ✅ What is the DOM?
 
 	// Chrome Dev Tools
