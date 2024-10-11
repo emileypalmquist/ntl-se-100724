@@ -1,19 +1,60 @@
 // ✅ Understand Static vs. Dynamic Web Applications
 
   // Static => Fixed, display the same content for each user
-  // Dynamic => Display different content for each user, allow for user interation
+  // Dynamic => Display different content for each user, allow for user interaction
 
 // ✅ Handling Click and Submit Events
+
+    // document.addEventListener('DOMContentLoaded', () => {
+    //   addButtonListener()
+    // })
+
+function handleClick() {
+  console.log('clicked')
+  // can manipulate the dom when the click happens
+    // create a new element 
+    // finding on the DOM where we want to add that new element
+    // add new element to the dom
+}
      
   // addEventListener(event, callbackFunction);
-
+function addButtonListener() {
+  const button = document.querySelector('button')
+  button.addEventListener('click', handleClick)
+  button.removeEventListener('click', handleClick)
+}
     // when would we define callbackFunction as an anonymous function instead
     // of as a function reference?
 
       // addEventListener("click", () => console.log("Test"));
         // vs. 
       // addEventListener("click", doSomething);
-
+      // need that function somewhere else in your code or
+      // pass different arguments other than the event or
+      // when you need to add a removeEventListener(needs the function passed to the event listener) 
+    
+function listenForNewPokemon() {
+  const form = document.getElementById("poke-form")
+  form.addEventListener('submit', (event) => {
+    // prevent the default behavior of the form
+    // no more page refresh
+    event.preventDefault()
+    // get value from name input
+    const name = event.target['name-input'].value
+    // get what was typed into the image input
+    const image = event.target['img-input'].value
+    // create pokemon object with id(one greater than last pokemon in pokemon array)
+    const poke = {
+      id: pokemon[pokemon.length - 1].id + 1,
+      name: name,
+      img: image,
+      likes: 0
+    }
+    // add the new pokemon to the DOM
+    renderPokemon(poke)
+  })   
+}
+      
 // ✅ .preventDefault()
 
   // event.preventDefault => prevents default event behavior (i.e., page reload
@@ -90,7 +131,12 @@ console.log("------------------------");
     // 	💡 In renderPokemon(), add an event listener to likeBttn, making sure to specify the event as well as the 
     //  callback function (addLike).
 
-    // 	💡 Use Chrome Dev Tools to view changes being made to the DOM
+    function addLike(pokemon, likesNum){
+      // update the pokemon objects liek property by 1
+      pokemon.likes++
+      // update the DOM with the new number of likes
+      likesNum.textContent = pokemon.likes
+    }
 
   // 2️⃣ Create a function (deletePokemon) that:
 
@@ -101,11 +147,6 @@ console.log("------------------------");
     // 	💡 In renderPokemon(), add an event listener to deleteBttn, making sure to specify the event as well as the 
     //  callback function (deletePokemon).
     
-    // 	💡 Use Chrome Dev Tools to view changes being made to the DOM
-    
-      function addLike(pokemon, likesNum){
-      //   // ❗ your code here
-      }
   
       function deletePoke(pokeCard){
       //   // ❗ your code here
@@ -131,7 +172,7 @@ console.log("------------------------");
       const deleteBttn = createNewElement('button', "delete-bttn", "Delete")
 
       // ❗ add likeBttn event listener ❗
-  
+      likesBttn.addEventListener('click', () => addLike(pokemon, likesNum) )
       // ❗ add deleteBttn event listener ❗
   
       pokeCard.append(pokeImg, pokeName, pokeLikes, likesNum, likesBttn, deleteBttn)
@@ -141,6 +182,8 @@ console.log("------------------------");
     // ✅ Check Answer: 
     function init() {
       pokemon.forEach(renderPokemon);
+      addButtonListener()
+      listenForNewPokemon()
     }
   
     init();
