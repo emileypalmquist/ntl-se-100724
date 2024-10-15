@@ -3,6 +3,7 @@
     // request => url + http verb
     // response => status code + message body
     // async functions => allow us to "wait" before performing additional actions 
+    // JSON - JavaScript Object Notation
 
         // synchronized => happening at the same time
 
@@ -39,21 +40,31 @@
     // https://api.openbrewerydb.org/breweries
     // https://www.postman.com/
 
-// ✅ Handling Promises from .fetch()
+// ✅ Handling Promises from fetch()
 
-    // .fetch() => used for fetching resources asynchronously across a network
+    // fetch() => used for fetching resources asynchronously across a network
 
-    // fetch('https://api.openbrewerydb.org/breweries') // returns a promise
+    fetch('https://api.openbrewerydb.org/breweriesssssssss') // returns a promise
     
     // // once first Promise is resolved...
-    // .then(resp => resp.json()) // ...convert the response into JSON and return another promise
+    .then(resp => {
+        // if (resp.ok){
+            return resp.json()
+        // } else {
+        //     throw Error('problem with request')
+        // }
+    }) // ...convert the response into JSON and return another promise
     
     // // once second Promise is resolved...
-    // .then(breweries => {
+    .then(breweries => {
 
-    //     // ...console.log the JS response
-    //     console.log(breweries)
-    // });
+        // ...console.log the JS response
+        console.log(breweries)
+    })
+    .catch(error => {
+        console.log(`Here's my error: ${error}`);
+    })
+
 
 // ✅ .catch()
 
