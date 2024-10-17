@@ -13,34 +13,34 @@
 
 	// fetch('http://localhost:3000/items') // returns a promise
     
-    // // once first Promise is resolved...
+    // // // once first Promise is resolved...
     // .then(resp => resp.json()) // ...convert the response from JSON to JS object and return another promise
     
-    // // once second Promise is resolved...
+    // // // once second Promise is resolved...
     // .then(items => {
 
     //     // ...console.log the JS response
-    //     console.log(item)
+    //     console.log(items)
     // });
 
 // ✅ CRUD with Fetch: POST Requests
        
-	// let item = { id: 1, content: "my item" };
+	let item = { id: "450c", content: "My item!" };
 
-	// fetch('http:localhost:3000/items/', {
+	// fetch('http:localhost:3000/items', {
 	// 	// ❗ specify method
 	// 	method: 'POST',
 		
 	// 	// ❗ specify headers
 	// 	headers: {
-	// 	'Content-Type': 'application/json',
+	// 		'Content-Type': 'application/json',
 	// 	},
 
 	// 	// ❗ convert the item into a JSON string, necessary for compatibility with db.json 
 	// 	body: JSON.stringify(item),
 	// })
 	// .then(resp => resp.json())
-	// .then(response => console.log("Success!", response));
+	// .then(data => console.log("Success!", data));
 
 // ✅ CRUD with Fetch: PATCH Requests
 
@@ -58,11 +58,13 @@
 	// 		},
 
 	// 		// ❗ convert the item into a JSON string
-	// 		body: JSON.stringify(item)
+	// 		body: JSON.stringify({
+	// 			content: "update the content to this string"
+	// 		})
 	// 	})
 	// 	.then(resp => resp.json())
 
-	// 	// ❗ should return the updated JS object
+	// // 	// ❗ should return the updated JS object
 	// 	.then(item => console.log(item));
 	// }
 
@@ -75,13 +77,13 @@
 	// 		method: 'DELETE',
 			
 	// 		// ❗ specify headers
-	// 		headers: {
-	// 			'Content-Type': 'application/json',
-	// 		}
+	// 		// headers: {
+	// 		// 	'Content-Type': 'application/json',
+	// 		// }
 	// 	})
 	// 	.then(resp => resp.json())
 
-	// 	// ❗ should return an empty JS object
+	// // 	// ❗ should return an empty JS object
 	// 	.then(item => console.log(item));
 	// }
 
@@ -101,11 +103,35 @@ const commentsForm = document.getElementById('comments-form');
 
 function increaseLike(pokemon, likesElement) {
 	++pokemon.likes;
+	// optimistic rendering
 	likesElement.textContent = pokemon.likes;
+
+	fetch(BASE_URL + `/pokemons/${pokemon.id}`, {
+		method: 'PATCH',
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			likes: pokemon.likes
+		})
+	})
+	.then((resp) => resp.json())
+	.then((updatedPokemon) => {
+		// pessimistic rendering
+		// likesElement.textContent = updatedPokemon.likes;
+	})
 }
 
-function deletePoke(pokeCard) {
-	pokeCard.remove();
+function deletePoke(pokeCard, id) {
+	// pessimistic rendering
+	fetch(BASE_URL + `/pokemons/${id}`, {
+		method: 'DELETE'
+	})
+	.then((resp) => resp.json())
+	.then((data) => {
+		console.log(data)
+		pokeCard.remove();
+	})
 }
 	
 function renderPokemon(pokemon) {
@@ -136,7 +162,7 @@ function renderPokemon(pokemon) {
 
 	deleteBttn.className = "delete-bttn";
 	deleteBttn.textContent = "Delete";
-	deleteBttn.addEventListener("click", () => deletePoke(pokeCard));
+	deleteBttn.addEventListener("click", () => deletePoke(pokeCard, pokemon.id));
 
 	pokeCard.append(pokeImg, pokeName, pokeLikes, likesNum, likeBttn, deleteBttn);
 	pokeContainer.appendChild(pokeCard);
@@ -218,8 +244,37 @@ function loadPokemons() {
 
 		//  ✔️ Resets the input values of commentsForm
 
-	function createComment() {
-		// ❗ your code here
+	function createComment(event) {
+		event.preventDefault()
+		
+		const newComment = {
+			user: event.target.user.value,
+			content: event.target.content.value
+		}
+
+		fetch(BASE_URL + '/comments', {
+			method: 'POST',
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(newComment)
+		})
+		.then(resp => resp.json())
+		.then((commentData) => {
+			console.log(commentData)
+			// create a new element
+			const commentCard = document.createElement('div')
+			
+			const h3 = document.createElement('h3')
+			h3.textContent = commentData.user
+
+			const p = document.createElement('p') 
+			p.textContent = commentData.content
+			// append it to the commentsContainer
+
+			commentCard.append(h3, p)
+			commentsContainer.append(commentCard)
+		})
 	}
 
 	// ✅ Check Answer: 

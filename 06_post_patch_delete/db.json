@@ -1,19 +1,19 @@
 {
   "pokemons": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Bulbasaur",
       "img": "./images/bulbasaur.png",
-      "likes": 4
+      "likes": 7
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Ivysaur",
       "img": "./images/ivysaur.png",
       "likes": 21
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Venusaur",
       "img": "./images/venusaur.png",
       "likes": 7
@@ -21,12 +21,34 @@
   ],
   "items": [
     {
-      "id": 1,
+      "id": "1",
       "content": "I love Bulbasaur!"
     },
     {
-      "id": 2,
+      "id": "2",
       "content": "I love Ivysaur more!"
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "user": "Emiley",
+      "content": "I love Bulbasaur!"
+    },
+    {
+      "id": "2",
+      "user": "Conner",
+      "content": "I love Ivysaur more!"
+    },
+    {
+      "id": "d835",
+      "user": "emiley",
+      "content": "hello"
+    },
+    {
+      "id": "edd5",
+      "user": "Potato",
+      "content": "mashed potatoes are the best"
     }
   ]
 }
