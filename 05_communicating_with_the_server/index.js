@@ -140,11 +140,17 @@ console.log("------------------------");
         //  ✔️ Invokes renderBrew() for each returned "brewery"
 
         // 	✨ BONUS: Include error handling using .catch()
+        // function handleBrews(allBreweries) {
+        //     allBreweries.forEach(renderBrew)
+        // }
 
         function getAllBreweries(){
-            // ❗ your code here
+            fetch(BASE_URL)
+            .then((resp) => resp.json())
+            // .then(handleBrews)
+            .then((allBreweries) => allBreweries.forEach(renderBrew))
         }
-
+        // getAllBreweries()
         // ✅ Check Answer: 
         // document.addEventListener('DOMContentLoaded', getAllBreweries);
 
@@ -159,8 +165,12 @@ console.log("------------------------");
         // 	✨ BONUS: Include error handling using .catch()
 
         function getBreweriesByCity(city){
-            // ❗ your code here
+            fetch(`${BASE_URL}?by_city=${city}`)
+            .then((resp) => resp.json())
+            .then((allBreweries) => allBreweries.forEach(renderBrew) )
         }
+
+        getBreweriesByCity('New York')
 
         // ✅ Check Answer: 
         // document.addEventListener('DOMContentLoaded', getBreweriesByCity('miami'));
