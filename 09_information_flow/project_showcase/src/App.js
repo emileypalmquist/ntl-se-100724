@@ -1,14 +1,20 @@
-import Header from "./components/Header"
-import ProjectForm from "./components/ProjectForm"
-import ProjectsList from "./components/ProjectsList"
+import { useState } from "react"
 
-import projects from "./projects"
+import Header from "./components/Header"
+import ProjectContainer from "./components/ProjectContainer"
 
 function App() {
-  return <div className="App">
-    <Header />
-    <ProjectForm />
-    <ProjectsList projects={projects} />
+  const [ darkMode, setDarkMode ] = useState(true)
+
+  function toggleDarkMode() {
+    setDarkMode(!darkMode)
+  }
+
+  const className = darkMode ? "App" : "App light"
+
+  return <div className={className}>
+    <Header darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />
+    <ProjectContainer />
   </div>;
 }
 

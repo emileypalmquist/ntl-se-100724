@@ -1,5 +1,5 @@
-function Header({ darkMode, onDarkModeToggle }) {
-    const handleModeClick = () => onDarkModeToggle()
+function Header({ darkMode, onToggleDarkMode }) {
+    const handleModeClick = () => onToggleDarkMode()
     const buttonText = darkMode ? "Light Mode" : "Dark Mode"
 
     return (
