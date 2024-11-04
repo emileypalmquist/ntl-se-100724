@@ -1,12 +1,18 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import ProjectForm from "./ProjectForm"
 import ProjectsList from "./ProjectsList"
 
-function ProjectContainer({ allProjects }) {
-    const [ projects, setProjects ] = useState(allProjects)
+function ProjectContainer() {
+    const [ projects, setProjects ] = useState([])
 
-    function onAddProject(newProject) {
+    useEffect(() => {
+        fetch('http://localhost:3001/projects')
+        .then((resp) => resp.json())
+        .then((data) => setProjects(data))
+    }, [])
+
+    function handleAddProject(newProject) {
         setProjects((currentProjects) => {
             return [...currentProjects, newProject]
         })
@@ -14,7 +20,7 @@ function ProjectContainer({ allProjects }) {
 
     return (
         <div>
-            <ProjectForm onAddProject={onAddProject}/>
+            <ProjectForm onAddProject={handleAddProject}/>
             <ProjectsList projects={projects} />
         </div>
     )

@@ -10,6 +10,7 @@ const initialState = {
 
 function ProjectForm({ onAddProject }) {
     const [ formData, setFormData ] = useState(initialState)
+    const { name, about, phase, link, image } = formData
 
     function handleChange(event) {
         const { name, value } = event.target
@@ -23,8 +24,18 @@ function ProjectForm({ onAddProject }) {
 
     function handleSubmit(event) {
         event.preventDefault()
-        // POST request to persist
-        onAddProject(formData)
+        fetch("http://localhost:3001/projects", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        })
+
+        .then((resp) => resp.json())
+        .then((newProject) => onAddProject(newProject))
+
+        setFormData(initialState)
     }
 
     return (
@@ -34,7 +45,7 @@ function ProjectForm({ onAddProject }) {
                 id='name' 
                 name='name' 
                 placeholder='Project Name'
-                value={formData.name}
+                value={name}
                 onChange={handleChange}
             />
             <label htmlFor='about'>About:</label>
@@ -42,7 +53,7 @@ function ProjectForm({ onAddProject }) {
                 id='about' 
                 name='about' 
                 placeholder='Project About' 
-                value={formData.about}
+                value={about}
                 onChange={handleChange}
             />
             <label htmlFor='phase'>Phase:</label>
@@ -51,7 +62,7 @@ function ProjectForm({ onAddProject }) {
                 name='phase'
                 type='number' 
                 placeholder='Project Phase' 
-                value={formData.phase}
+                value={phase}
                 onChange={handleChange}
             />
             <label htmlFor='link'>Link:</label>
@@ -59,7 +70,7 @@ function ProjectForm({ onAddProject }) {
                 id='link' 
                 name='link' 
                 placeholder='Project Link' 
-                value={formData.link}
+                value={link}
                 onChange={handleChange}
             />
             <label htmlFor='image'>Image:</label>
@@ -67,7 +78,7 @@ function ProjectForm({ onAddProject }) {
                 id='image' 
                 name='image' 
                 placeholder='Project Image' 
-                value={formData.image}
+                value={image}
                 onChange={handleChange}
             />
             <button type='submit'>Add Project</button>
