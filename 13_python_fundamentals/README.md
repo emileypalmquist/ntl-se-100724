@@ -27,6 +27,7 @@
 #### 5. Move conditional logic from Deliverable 1 into a function (pet_status) so that we may use it with different pets / moods
 
 #### 6. Create a function (pet_birthday) that will increment a pet's age up by 1. Use try / except to handle errors. 
+https://docs.python.org/3/tutorial/errors.html
 
 ---
 
