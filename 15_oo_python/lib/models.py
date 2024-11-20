@@ -17,19 +17,33 @@ Pet
     - breed
 """
 #✅ 1. Create a Pet class
+# pascal casing - first letter of each word is capitalized
+class Pet:
+    def __init__(self, name="cutie", age=0, breed="Unknown"):
+        self.name = name
+        self.age = age
+        self.breed = breed
 
-    #✅ 2. Instantiate a few pet instances in ipdb
-    #✅ 2a. Compare the two pet instances to demonstrate they are not the same object
+    def say_hello(self):
+        print("Hello!")
     
-    #✅ 3. Demonstrate __init__
-    #✅ 3a. Add parameters for attributes
-    #✅ 3b. use dot notation to access their attributes
-    #✅ 3c. update attributes with new values
+    def print_pet_details(self):
+        print("Pet info")
+        print(f"name: {self.name}")
+        print(f"age: {self.age}")
+        print(f"breed: {self.breed}")
+    
+    def speak(self):
+        if self.breed == 'Cat':
+            print("Meow")
+        elif self.breed == 'Dog':
+            print("Woof")
+        else:
+            print("...silence")
 
-    #✅ 4. Demonstrate INSTANCE methods
-    #✅ 4a. Create a hello method that will print "Hello!"
-    #✅ 4b. Create a print_pet_details function that will print the pet attributes
-    #✅ 4c. Create a speak method that will print "Woof" for dogs and "Meow" for cats
+apollo = Pet(name="Apollo")
+daisy = Pet(age=2, breed="Dog")
+rose = Pet(breed="Cat")
 
 """
 Owner
@@ -37,10 +51,34 @@ Owner
     - age
 """
 
-#✅ 5. Set constraints for updating properties (attributes that are controlled by methods)
-    #✅ 5a. Create Owner class
-    #✅ 5b. Create get/set instance methods for name property
-    #✅ 5c. Create constraint to make sure the name is of type string
-    #✅ 5d. Compile get_name, set_name under the same property name (@ decorator is syntactic sugar)
-    #✅ 5e. Add parameter to pass in name property value on instantiation
-    #✅ 5f. Use the name property to set the name "private" attribute on instantiation
+class Owner:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def get_name(self):
+        return self._name
+    
+    def set_name(self, new_name):
+        if type(new_name) == str:
+            self._name = new_name
+        else:
+            print("name must be a str")
+
+    name = property(get_name, set_name)
+
+    def get_age(self):
+        return self._age
+
+    def set_age(self, new_age):
+        if isinstance(new_age, int):
+            self._age = new_age
+        else:
+            raise TypeError('Age must be an integer')
+
+    age = property(get_age, set_age)
+
+    def __repr__(self):
+        return f"<Owner name={self.name} age={self.age}>"
+
+em = Owner("Emiley", 29)
