@@ -4,7 +4,7 @@
 
 - [ ] Understand how the Internet works
 - [ ] Understand how the request-response cycle works
-- [ ] Understand HTTP protocols
+- [ ] Understand HTTP
 - [ ] Intialize a Flask application
 - [ ] Use Flask routing and create views
 
